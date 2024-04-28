@@ -1,0 +1,28 @@
+[Unit]
+Description=Frigate Mail Service
+After=mosquitto.service
+Wants=mosquitto.service 
+Requires=mosquitto.service
+
+[Service]
+ExecStart=/home/<user>/.venv/bin/python3 /home/<user>/Documents/MyScripts/myFrigateMail.py
+
+# to query logs using journalctl, set a logical name here
+SyslogIdentifier=FrigateMail
+
+User=peter
+
+# ensure the service automatically restarts
+Restart=always
+# amount of time to wait before restarting the service                        
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+
+# install this service with:
+# sudo cp /home/<user>/Documents/MyScripts/FrigateMail.service /lib/systemd/system/
+# sudo systemctl enable FrigateMail.service
+# sudo systemctl start FrigateMail.service
+# check and reboot
+# sudo systemctl list-unit-files
