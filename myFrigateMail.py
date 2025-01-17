@@ -303,7 +303,7 @@ def processFrigateEventMessages(mqttclient_id, mqtttopic, mqttusername, mqttpass
                   files.append(filenameSnapshot)
                   emailbody_text_to_be_send = emailbody_text_to_be_send + f"\n\nSnapshot url: {urlSnapshot}" 
                 if total_size > 0:  
-                  emailbody_text_to_be_send = emailbody_text_to_be_send + f"\n\nClip is not included. It is too large to be mailed.\n\nClip url: {urlClip}"
+                  emailbody_text_to_be_send = emailbody_text_to_be_send + f"\n\nClip is not included. It is too large to be mailed.\n\nClip url: {urlClip}\n"
                   ret_code = send_mail(send_from=emailFrom, send_to=[emailTo], subject=emailtitel, 
                     message=emailbody_text_to_be_send, files=files, server=emailserver, 
                     port=emailport, username=emailusername, password=emailpassword, use_tls=emailuse_tls, 
