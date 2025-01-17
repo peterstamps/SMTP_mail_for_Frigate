@@ -131,7 +131,10 @@ def send_mail(send_from, send_to, subject, message, files, server, port, usernam
           part.add_header('Content-Disposition',
                           'attachment; filename={}'.format(Path(path).name))
           msg.attach(part)
-          msg.attach(MIMEText(path))
+          if path.endswith('.mp4'):
+            msg.attach(MIMEText("\nVideo filename: " + path)) 
+          if path.endswith('.jpg'):
+            msg.attach(MIMEText("\nPicture filename: " + path)) 
         except:
           print(f"{dt.now().strftime('%Y-%m-%d %H:%M:%S')} Error with attachment, skipping {object_storage_path+path}")
           pass
@@ -283,7 +286,7 @@ def processFrigateEventMessages(mqttclient_id, mqtttopic, mqttusername, mqttpass
             if filesizeClip > 0: # we have a clip  
                 files.append(filenameClip)
                 total_size = total_size + filesizeClip
-                emailbody_text_to_be_send = emailbody_text_to_be_send + f"\n\nClip url: {urlClip}" 
+                emailbody_text_to_be_send = emailbody_text_to_be_send + f"\n\nClip url: {urlClip}\n" 
                 
             if 0 < total_size < email_maximum_size: #  total size of attachment files is smaller than kpnmail maximum which is 52428800 bytes              
                 ret_code = send_mail(send_from=emailFrom, send_to=[emailTo], subject=emailtitel, 
